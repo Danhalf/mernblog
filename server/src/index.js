@@ -18,7 +18,7 @@ app.use(express.json());
 
 //routes
 app.get('/', (req,res) => {
-    res.json({message: 'its cool'})
+    res.json({message: 'message'})
 })
 
 const start = async () => {
