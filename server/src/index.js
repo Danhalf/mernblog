@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from 'cors';
 
+import authRouter from '../routes/auth.js'
+
 dotenv.config();
 const app = express();
 
@@ -17,9 +19,7 @@ app.use(cors());
 app.use(express.json());
 
 //routes
-app.get('/', (req,res) => {
-    res.json({message: 'message'})
-})
+app.use('/api/auth', authRouter)
 
 const start = async () => {
     try {
