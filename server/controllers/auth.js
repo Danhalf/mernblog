@@ -1,5 +1,11 @@
 import UserModel from "../Models/User.js";
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const JWT_SECRET = process.env.JWT_SECRET;
 
 // Register user
 export const register = async (req, res) => {
@@ -17,15 +23,13 @@ export const register = async (req, res) => {
         const saltRounds = 10;
         const hash = bcrypt.hashSync(password, saltRounds);
 
-
-
         const newUser = new UserModel({
             username, password: hash
         })
 
         await newUser.save();
 
-        res.status(202).json({
+        res.status(201).json({
             newUser,
             message: 'User created successfully'
         })
@@ -39,9 +43,39 @@ export const register = async (req, res) => {
 // Login user
 export const login = async (req, res) => {
     try {
+        const {username, password} = req.body;
+        const user = await UserModel.findOne({username});
+
+        if (!user) {
+            return res.status(404).json({
+                message: `User ${username} not found`
+            })
+        }
+
+        const isPasswordCorrect = await bcrypt.compare(password, user.password)
+
+        if (!isPasswordCorrect) {
+            return res.status(401).json({
+                message: `User ${username} password is not correct!`
+            })
+        }
+
+        const token = jwt.sign({
+            id: user._id
+        }, JWT_SECRET, {expiresIn: '30d'})
+
+        res.status(303).json({
+            token, user, message: `${username} has entered to the system`
+        })
+
+
+
 
     } catch (error) {
-
+        res.json({
+            message: `Error during the user login`,
+            error: error.toString()
+        })
     }
 }
 
