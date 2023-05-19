@@ -1,18 +1,13 @@
 import express from 'express'
 import mongoose from "mongoose";
-import dotenv from "dotenv";
 import cors from 'cors';
+import { PORT, DB_NAME, DB_PASSWORD, DB_USER } from "../constants/constants.js";
+
 
 import authRouter from '../routes/auth.js'
 
-dotenv.config();
 const app = express();
 
-//constants
-const PORT = process.env.PORT || 5000;
-const DB_USER = process.env.DB_USER;
-const DB_PASSWORD = process.env.DB_PASSWORD;
-const DB_NAME = process.env.DB_NAME;
 
 //middlewares
 app.use(cors());
@@ -23,11 +18,11 @@ app.use('/api/auth', authRouter)
 
 const start = async () => {
     try {
-        await  mongoose.connect(
-            `mongodb+srv://${DB_USER}:${DB_PASSWORD}@dmdb.572jzno.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`
+        await mongoose.connect(
+            `mongodb+srv://${ DB_USER }:${ DB_PASSWORD }@dmdb.572jzno.mongodb.net/${ DB_NAME }?retryWrites=true&w=majority`
         )
         app.listen(PORT, () => {
-            console.log(`Server started at port ${PORT}`)
+            console.log(`Server started at port ${ PORT }`)
         })
     } catch (e) {
         console.log(e)

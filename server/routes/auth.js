@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { register, login, self } from "../controllers/auth.js";
+import { checkAuth } from "../utils/checkAuth.js";
 
 
 const router = new Router();
@@ -11,6 +12,6 @@ router.post('/register', register)
 router.post('/login', login)
 
 // Get user
-router.get('/self', self)
+router.get('/self', checkAuth, self)
 
 export default router
