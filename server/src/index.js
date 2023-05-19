@@ -1,8 +1,10 @@
 import express from 'express'
 import mongoose from "mongoose";
 import cors from 'cors';
+
 import { PORT, DB_NAME, DB_PASSWORD, DB_USER } from "../constants/constants.js";
 
+console.log(DB_NAME);
 
 import authRouter from '../routes/auth.js'
 

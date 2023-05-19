@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon src/index.js",
-    "debug": "nodemon --inspect src/index.js"
+    "debug": "dotenv -e .env.dev -- nodemon --inspect src/index.js"
   },
   "keywords": [],
   "author": "",
