@@ -7,10 +7,11 @@ import { EditPostPage } from "../pages/EditPostPage";
 import { AddPostPage } from "../pages/AddPostPage";
 import { RegisterPage } from "../pages/RegisterPage";
 import { Layout } from "../components/Layout";
+import { create, edit, login, main, post, posts, register } from "../constants/links";
 
 export const router = createBrowserRouter([
     {
-        path: "/",
+        path: main.link,
         element: <Layout/>,
         children: [
             {
@@ -18,27 +19,27 @@ export const router = createBrowserRouter([
                 element: <MainPage/>
             },
             {
-                path: "/login",
+                path: login.link,
                 element: <LoginPage/>
             },
             {
-                path: "/posts",
+                path: posts.link,
                 element: <PostsPage/>
             },
             {
-                path: "/:id",
+                path: post.link,
                 element: <PostPage/>
             },
             {
-                path: "/:id/edit",
+                path: edit.link,
                 element: <EditPostPage/>
             },
             {
-                path: "/new",
+                path: create.link,
                 element: <AddPostPage/>
             },
             {
-                path: "/register",
+                path: register.link,
                 element: <RegisterPage/>
             } ]
     },
