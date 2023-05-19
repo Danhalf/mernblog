@@ -1,5 +1,5 @@
 export const PostsPage = () => (
     <>
-        PostPage
+        PostsPage
     </>
 );
