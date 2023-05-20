@@ -4,7 +4,7 @@ export const links = {
         link: "/",
     },
     login: {
-        text: 'Login',
+        text: 'Sign In',
         link: "/login",
     },
     posts: {
@@ -22,12 +22,15 @@ export const links = {
     create: {
         text: 'Add post',
         link: "/create",
-    }
-    ,
+    },
     register: {
         text: 'Sign up',
         link: "/register",
+    },
+    exit: {
+        text: 'Exit',
+        link: "/exit",
     }
 }
 
-export const { main, login, posts, post, create, edit, register } = links
+export const { main, login, posts, post, create, edit, register, exit } = links
