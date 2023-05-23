@@ -1,18 +1,51 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { login, register } from "../constants/links";
+import { useDispatch } from "react-redux";
+import { registerUser } from "../redux/features/auth/authSlice";
 
 export const AuthForm = ({ type }) => {
+        const [ username, setUsername ] = useState('')
+        const [ password, setPassword ] = useState('')
+        const [ email, setEmail ] = useState('')
+        const dispatch = useDispatch();
+        const usernameHandler = ({ target }) => {
+            setUsername(target.value)
+        }
+        const passwordHandler = ({ target }) => {
+            setPassword(target.value)
+        }
+        const emailHandler = ({ target }) => {
+            setEmail(target.value)
+        }
+        const resetState = () => {
+            setEmail('')
+            setUsername('')
+            setPassword('')
+        }
+
+        const submitHandler = () => {
+            try {
+                // const cbType = () => `${ type }User({username, password, ${ type === 'register' && email }})`
+                dispatch(registerUser({ username, password }))
+                // resetState()
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
         const formData = {};
         if (type === 'login') {
             formData.title = 'Sign In'
             formData.buttonText = 'Login'
             formData.linkText = 'Do not have an account?'
-            formData.linkTo = '/register'
+            formData.linkTo = register.link
             formData.isEmailRequired = false
         } else if (type === 'register') {
             formData.title = 'Sign Up'
             formData.buttonText = 'Create'
             formData.linkText = 'Do you have an account?'
-            formData.linkTo = '/login'
+            formData.linkTo = login.link
             formData.isEmailRequired = true
         }
 
@@ -25,6 +58,8 @@ export const AuthForm = ({ type }) => {
                 Username
                 <input
                     type="text"
+                    value={ username }
+                    onInput={ usernameHandler }
                     placeholder='John Dou'
                     className='text-center mt-1 text-black w-full rounded-lg bg-transparent border-2 hover:border-green-300 focus:border-green-400 py-1 px-2 outline-none placeholder:text-grey-400'
                 />
@@ -35,6 +70,8 @@ export const AuthForm = ({ type }) => {
                 Email
                 <input
                     type="email"
+                    value={ email }
+                    onInput={ emailHandler }
                     placeholder='johndou@anymail.com'
                     className='text-center mt-1 text-black w-full rounded-lg bg-transparent border-2 hover:border-green-300 focus:border-green-400 py-1 px-2 outline-none placeholder:text-grey-400'
                 />
@@ -43,6 +80,8 @@ export const AuthForm = ({ type }) => {
                 Password
                 <input
                     type="password"
+                    value={ password }
+                    onInput={ passwordHandler }
                     placeholder='**********'
                     className='text-center mt-1 text-black w-full rounded-lg bg-transparent border-2 hover:border-green-300 focus:border-green-400 py-1 px-2 outline-none placeholder:text-grey-400'
                 />
@@ -51,10 +90,12 @@ export const AuthForm = ({ type }) => {
                 <Link className='py-2 hover:text-green-400' to={ linkTo }>{ linkText }</Link>
                 <button
                     type='submit'
+                    onClick={ submitHandler }
                     className="flex justify-center hover:bg-green-400 items-center uppercase border-2 border-white rounded py-2 px-8">
                     { buttonText }
                 </button>
             </div>
+            { username } { password } { isEmailRequired && email }
         </form>
 
     }

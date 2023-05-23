@@ -24,10 +24,15 @@ export const register = async (req, res) => {
             username, password: hash
         })
 
+        const token = jwt.sign({
+            id: newUser._id
+        }, JWT_SECRET, { expiresIn: '30d' })
+
         await newUser.save();
 
         res.status(201).json({
             newUser,
+            token,
             message: 'User created successfully'
         })
     } catch (error) {
