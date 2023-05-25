@@ -1,14 +1,23 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { login, register } from "../constants/links";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../redux/features/auth/authSlice";
+import { toast } from "react-toastify";
 
 export const AuthForm = ({ type }) => {
         const [ username, setUsername ] = useState('')
         const [ password, setPassword ] = useState('')
         const [ email, setEmail ] = useState('')
+        const { status } = useSelector((state) => state.auth)
         const dispatch = useDispatch();
+
+        useEffect(() => {
+            if (status) {
+                toast(status)
+            }
+        }, [ status ])
+
         const usernameHandler = ({ target }) => {
             setUsername(target.value)
         }
@@ -24,11 +33,10 @@ export const AuthForm = ({ type }) => {
             setPassword('')
         }
 
-        const submitHandler = () => {
+        const submitHandler = async () => {
             try {
-                // const cbType = () => `${ type }User({username, password, ${ type === 'register' && email }})`
                 dispatch(registerUser({ username, password }))
-                // resetState()
+                resetState()
             } catch (error) {
                 console.log(error)
             }

@@ -12,8 +12,8 @@ export const register = async (req, res) => {
         const isUsed = await UserModel.findOne({ username });
 
         if (isUsed) {
-            return res.status(402).json({
-                message: `name ${ username } already used`
+            res.json({
+                message: `Username ${ username } already used`
             })
         }
 
@@ -33,7 +33,7 @@ export const register = async (req, res) => {
         res.status(201).json({
             newUser,
             token,
-            message: 'User created successfully'
+            message: `User ${username} created successfully`
         })
     } catch (error) {
         res.json({

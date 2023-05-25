@@ -1,5 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { Navbar } from "./Navbar/Navbar";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export const Layout = () => (
@@ -8,5 +10,6 @@ export const Layout = () => (
             <Navbar/>
             <Outlet/>
         </div>
+        <ToastContainer position='bottom-right'/>
     </>
 );
