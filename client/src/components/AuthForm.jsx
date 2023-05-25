@@ -9,14 +9,15 @@ export const AuthForm = ({ type }) => {
         const [ username, setUsername ] = useState('')
         const [ password, setPassword ] = useState('')
         const [ email, setEmail ] = useState('')
-        const { status } = useSelector((state) => state.auth)
+        const { status, error } = useSelector((state) => state.auth)
         const dispatch = useDispatch();
 
         useEffect(() => {
             if (status) {
-                toast(status)
+                console.log(error)
+                error ? toast.error(status) : toast.success(status)
             }
-        }, [ status ])
+        }, [ status, error ])
 
         const usernameHandler = ({ target }) => {
             setUsername(target.value)
