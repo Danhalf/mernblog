@@ -14,7 +14,6 @@ export const AuthForm = ({ type }) => {
 
         useEffect(() => {
             if (status) {
-                console.log(error)
                 error ? toast.error(status) : toast.success(status)
             }
         }, [ status, error ])
